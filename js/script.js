@@ -6,7 +6,7 @@ project 1 - A Random Quote Generator
 /*** 
   An array of objects with quotes and information about the quote.
 ***/
-let quotes = [{
+const quotes = [{
         quote: "Wisely, and slow. They stumble that run fast.",
         source: "William Shakespeare",
         citation: "Romeo and Juliet",
@@ -49,44 +49,48 @@ let quotes = [{
   This function generates a random number and uses the number to log the quotes from the 
   array of objects.
 ***/
-function getRandomQuote() {
+const getRandomQuote = () => {
     let randomNumber = Math.floor(Math.random() * quotes.length);
     let randomQuote = quotes[randomNumber];
     return randomQuote;
 }
 
+
+
 /***
   This function uses the quote generator getRandomQuote() to assemble the correct information into
   a string that is then printed on the page.
 ***/
-function printQuote() {
-    let getQuote = getRandomQuote();
-    let randomQuoteHTML = '';
-    randomQuoteHTML += '<p class="quote">' + getQuote.quote + '</p>';
-    randomQuoteHTML += '<p class="source">' + getQuote.source;
-    if (getQuote.citation !== '') {
-        randomQuoteHTML += '<span class="citation">' + getQuote.citation + '</span>';
+const printQuote = () => {
+        let getQuote = getRandomQuote();
+        let randomQuoteHTML = '';
+        let button = document.getElementById('loadQuote');
+        randomQuoteHTML += '<p class="quote">' + getQuote.quote + '</p>';
+        randomQuoteHTML += '<p class="source">' + getQuote.source;
+        if (getQuote.citation !== '') {
+            randomQuoteHTML += '<span class="citation">' + getQuote.citation + '</span>';
+        }
+        if (getQuote.year !== '') {
+            randomQuoteHTML += '<span class="year">' + getQuote.year + '</span>';
+        }
+        if (getQuote.category !== '') {
+            randomQuoteHTML += '<span class="category">' + getQuote.category + '</span>';
+        }
+        randomQuoteHTML += '</p>';
+        document.body.style.backgroundColor = randomColor(); // found this online in order to target the background color on the page.
+        button.style.backgroundColor = randomColor();
+        return document.getElementById("quote-box").innerHTML = randomQuoteHTML;
     }
-    if (getQuote.year !== '') {
-        randomQuoteHTML += '<span class="year">' + getQuote.year + '</span>';
-    }
-    if (getQuote.category !== '') {
-        randomQuoteHTML += '<span class="category">' + getQuote.category + '</span>';
-    }
-    randomQuoteHTML += '</p>';
-    document.body.style.backgroundColor = randomColor(); // found this online in order to target the background color on the page.
-    return document.getElementById("quote-box").innerHTML = randomQuoteHTML;
-}
-/***
-  function generates a random number between 0 and 255.
-***/
-function randomRGB() {
-    return Math.floor(Math.random() * 256);
-}
+    /***
+      function generates a random number between 0 and 255.
+    ***/
+const randomRGB = () => Math.floor(Math.random() * 256);
+
+
 /***
   function uses the generated numbers from randomRGB() and uses 3 values to generate a rgb().
 ***/
-function randomColor() {
+const randomColor = () => {
     let color = 'rgb(';
     color += randomRGB() + ',';
     color += randomRGB() + ',';
@@ -98,8 +102,6 @@ function randomColor() {
  Set timer to 15 seconds per quote 
  ***/
 setInterval(printQuote, 15000)
-
-
 
 /***
   calls printQuote() after every the button is clicked.
